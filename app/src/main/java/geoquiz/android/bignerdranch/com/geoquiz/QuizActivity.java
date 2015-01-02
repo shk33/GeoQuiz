@@ -33,10 +33,15 @@ public class QuizActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        /*
+        * Question Text View
+        */
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
-        int question = mQuestionBank[mCurrentIndex].getQuestion();
-        mQuestionTextView.setText(question);
+        updateQuestion();
 
+        /*
+        * True Button
+        */
         mTrueButton  = (Button)findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +52,9 @@ public class QuizActivity extends ActionBarActivity {
             }
         });
 
+        /*
+        * False Button
+        */
         mFalseButton = (Button)findViewById(R.id.false_button);
         mFalseButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -54,6 +62,18 @@ public class QuizActivity extends ActionBarActivity {
                 Toast.makeText(QuizActivity.this,
                         R.string.incorrect_toast,
                         Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*
+        * Next Button
+        */
+        mNextButton = (Button)findViewById(R.id.next_button);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentIndex = (mCurrentIndex + 1)% mQuestionBank.length;
+                updateQuestion();
             }
         });
 
@@ -80,5 +100,17 @@ public class QuizActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+    * Private methods
+    */
+    private void updateQuestion() {
+        int question = mQuestionBank[mCurrentIndex].getQuestion();
+        mQuestionTextView.setText(question);
+    }
+
+    private void checkAnswer(boolean userPressedTrue){
+        boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
     }
 }
