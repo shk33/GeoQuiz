@@ -46,9 +46,7 @@ public class QuizActivity extends ActionBarActivity {
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuizActivity.this,
-                               R.string.correct_toast,
-                               Toast.LENGTH_SHORT).show();
+                checkAnswer(true);
             }
         });
 
@@ -59,9 +57,7 @@ public class QuizActivity extends ActionBarActivity {
         mFalseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Toast.makeText(QuizActivity.this,
-                        R.string.incorrect_toast,
-                        Toast.LENGTH_SHORT).show();
+                checkAnswer(false);
             }
         });
 
@@ -112,5 +108,14 @@ public class QuizActivity extends ActionBarActivity {
 
     private void checkAnswer(boolean userPressedTrue){
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
+        int messageResId = 0;
+
+        if(userPressedTrue == answerIsTrue){
+            messageResId = R.string.correct_toast;
+        }else{
+            messageResId = R.string.incorrect_toast;
+        }
+
+        Toast.makeText(QuizActivity.this, messageResId , Toast.LENGTH_SHORT).show();
     }
 }
