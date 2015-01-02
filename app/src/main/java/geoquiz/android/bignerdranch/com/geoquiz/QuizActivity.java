@@ -37,6 +37,12 @@ public class QuizActivity extends ActionBarActivity {
         * Question Text View
         */
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextQuestion();
+            }
+        });
         updateQuestion();
 
         /*
@@ -68,8 +74,7 @@ public class QuizActivity extends ActionBarActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex + 1)% mQuestionBank.length;
-                updateQuestion();
+                nextQuestion();
             }
         });
 
@@ -117,5 +122,10 @@ public class QuizActivity extends ActionBarActivity {
         }
 
         Toast.makeText(QuizActivity.this, messageResId , Toast.LENGTH_SHORT).show();
+    }
+
+    private void nextQuestion(){
+        mCurrentIndex = (mCurrentIndex + 1)% mQuestionBank.length;
+        updateQuestion();
     }
 }
